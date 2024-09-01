@@ -14,24 +14,22 @@ public class Class {
 
     private Class parentClass;
 
-    private List<Room> possibleRooms;
+    private List<Room> possibleRooms = new ArrayList<>();
 
-    private Map<String, Literal> hour;
+    private Map<String, Literal> hour = new HashMap<>();
 
-    private Map<String, Literal> day;
+    private Map<String, Literal> day = new HashMap<>();
 
     Class(int id, int limit) {
         this.id = id;
         this.limit = limit;
         parentClass = null;
-        this.possibleRooms = new ArrayList<>();
     }
 
     Class(Class classs) {
         this.id = classs.getId();
         this.limit = classs.getLimit();
         this.parentClass = classs.getParentClass();
-        this.possibleRooms = new ArrayList<>(this.getPossibleRooms());
     }
 
     public int getId() {
@@ -43,7 +41,7 @@ public class Class {
     }
 
     public Class getParentClass() {
-        return parentClass;
+        return new Class(parentClass);
     }
 
     public List<Room> getPossibleRooms() {
@@ -59,11 +57,31 @@ public class Class {
     }
 
     public void setParentClass(Class parentClass) {
-        this.parentClass = parentClass;
+        this.parentClass = new Class(parentClass);
     }
 
     public void setPossibleRooms(List<Room> possibleRooms) {
         this.possibleRooms = possibleRooms;
+    }
+    
+    public Map<String, Literal> getHour() {
+        return new HashMap<>(hour);
+    }
+
+    public void setHour(Map<String, Literal> hour) {
+        this.hour = new HashMap<>(hour);
+    }
+
+    public Map<String, Literal> getDay() {
+        return new HashMap<>(day);
+    }
+
+    public void setDay(Map<String, Literal> day) {
+        this.day = new HashMap<>(day);
+    }
+
+    public void addRoom(Room room) {
+        possibleRooms.add(room);
     }
 
 

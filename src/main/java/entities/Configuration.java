@@ -7,6 +7,10 @@ public class Configuration {
     private int id;
     private Map<String, Subpart> subpart = new HashMap<>();
 
+    Configuration(int id) {
+        this.id = id;
+    }
+    
     public int getId() {
         return id;
     }
@@ -16,11 +20,11 @@ public class Configuration {
     }
 
     public Map<String, Subpart> getSubpart() {
-        return subpart;
+        return new HashMap<>(subpart);
     }
 
     public void setSubpart(Map<String, Subpart> subpart) {
-        this.subpart = subpart;
+        this.subpart = new HashMap<>(subpart);
     }
 
 }

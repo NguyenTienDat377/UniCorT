@@ -1,21 +1,18 @@
 package entities;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
 public class Course {
     private String name;
     private String teacherId;
-    private Map<Integer, Configuration> configurations;
+    private Map<Integer, Configuration> configurations = new HashMap<>();
     private int limit;
     private int numberOfStudent;
 
     Course(String name, String teacherId, int limit, int numberOfStudent) {
         this.name = name;
         this.teacherId = teacherId;
-        configurations = new HashMap<>();
         this.limit = limit;
         this.numberOfStudent = numberOfStudent;
     }
@@ -28,7 +25,7 @@ public class Course {
     }
 
     public Map<Integer, Configuration> getConfigurations() {
-        return configurations;
+        return new HashMap<>(configurations);
     }
 
     public int getLimit() {
@@ -48,7 +45,7 @@ public class Course {
     }
 
     public void setConfigurations(Map<Integer, Configuration> configurations) {
-        this.configurations = configurations;
+        this.configurations = new HashMap<>(configurations);
     }
 
     public void setLimit(int limit) {

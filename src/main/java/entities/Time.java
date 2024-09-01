@@ -1,14 +1,10 @@
 package entities;
-
-import java.util.List;
-import java.util.ArrayList;
-
 public class Time {
     private int start;
     private int end;
     private String day;
     private String week;
-    private List<Integer> classesAssigned;
+
     public Time(int start, int end, String day, String week) {
         this.start = start;
         this.end = end;
