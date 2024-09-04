@@ -20,6 +20,8 @@ public class Class {
 
     private Map<String, Literal> day = new HashMap<>();
 
+    
+
     Class(int id, int limit) {
         this.id = id;
         this.limit = limit;

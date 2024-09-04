@@ -32,7 +32,7 @@ public class Utils {
         StringBuilder week = new StringBuilder();
         String Week1 = t1.getWeek();
         String Week2 = t2.getWeek();
-        for (int i = 0; i < Day1.length(); i++) {
+        for (int i = 0; i < Week1.length(); i++) {
             int week1 = Week1.charAt(i) - '0';
             int week2 = Week2.charAt(i) - '0';
             week.append(week1 & week2);

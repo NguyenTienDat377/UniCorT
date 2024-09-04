@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Room {
     private int id;
@@ -8,6 +9,7 @@ public class Room {
     private String type;
     private int capacity;
     private boolean open = false;
+    private ArrayList<Time> unavailable;
     private HashMap<Integer, Integer> travel;
 
 
@@ -42,6 +44,13 @@ public class Room {
     }
     public void setTravel(HashMap<Integer, Integer> travel) {
         this.travel = travel;
+    }
+    public ArrayList<Time> getUnavailable() {
+        return unavailable;
+    }
+
+    public void setUnavailable(ArrayList<Time> unavailable) {
+        this.unavailable = unavailable;
     }
 
 }
