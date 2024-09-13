@@ -1,5 +1,12 @@
 package constraints.utils;
 
+import com.google.ortools.sat.Literal;
+import com.google.ortools.sat.LinearExpr;
+import com.google.ortools.sat.Constraint;
+
+import solver.ConstraintHandler;
+import solver.Factory;
+
 import entities.Time;
 
 public class Utils {
@@ -52,6 +59,20 @@ public class Utils {
         return week.toString();
     }
 
+    public static void addDistributionConstraint(Literal t1, Literal t2, boolean isRequired, int penalty) {
+        if (isRequired) {
+            Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+        } else {
+            Constraint pos = Factory.getCpModel().addBoolAnd(new Literal[]{t1, t2});
+            Constraint neg = Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+            Literal l = ConstraintHandler.addConstraint(pos, neg);
+            LinearExpr expr = LinearExpr.weightedSum(
+                new Literal[]{l},
+                new long[]{(long) Factory.getProblem().getOptimization().getDistribution() * penalty}
+            );
+            Factory.getProblem().getSoftDistributionExpr().add(expr);
+        }
 
+    }
 
 }

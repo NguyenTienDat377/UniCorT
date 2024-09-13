@@ -1,13 +1,13 @@
 package entities;
 public class Time {
     private int start;
-    private int end;
+    private int length;
     private String day;
     private String week;
 
-    public Time(int start, int end, String day, String week) {
+    public Time(int start, int length, String day, String week) {
         this.start = start;
-        this.end = end;
+        this.length = length;
         this.day = day;
         this.week = week;
     }
@@ -20,12 +20,12 @@ public class Time {
         this.start = start;
     }
 
-    public int getEnd() {
-        return end;
+    public int getLength() {
+        return length;
     }
 
-    public void setEnd(int end) {
-        this.end = end;
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public String getDay() {
@@ -42,5 +42,9 @@ public class Time {
 
     public void setWeek(String week) {
         this.week = week;
+    }
+
+    public int getEnd() {
+        return this.start + this.length;
     }
 }

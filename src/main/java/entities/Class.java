@@ -1,26 +1,22 @@
 package entities;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.google.ortools.sat.Literal;
 
 public class Class {
     private int id;
-
     private int limit;
 
     private Class parentClass;
 
-    private List<Room> possibleRooms = new ArrayList<>();
+    private ArrayList<Penalty<Room>> roomList;
+    private ArrayList<Penalty<Time>> timesList;
 
-    private Map<String, Literal> hour = new HashMap<>();
-
-    private Map<String, Literal> day = new HashMap<>();
-
-    
+    private Map<Room, Literal> rooms = new HashMap<>();
+    private Map<Time, Literal> times = new HashMap<>();
 
     Class(int id, int limit) {
         this.id = id;
@@ -46,8 +42,12 @@ public class Class {
         return new Class(parentClass);
     }
 
-    public List<Room> getPossibleRooms() {
-        return new ArrayList<>(possibleRooms);
+    public ArrayList<Penalty<Room>> getRoomList() {
+        return new ArrayList<>(roomList);
+    }
+
+    public ArrayList<Penalty<Time>> getTimeList() {
+        return new ArrayList<>(timesList);
     }
 
     public void setId(int id) {
@@ -61,29 +61,27 @@ public class Class {
     public void setParentClass(Class parentClass) {
         this.parentClass = new Class(parentClass);
     }
-
-    public void setPossibleRooms(List<Room> possibleRooms) {
-        this.possibleRooms = possibleRooms;
-    }
     
-    public Map<String, Literal> getHour() {
-        return new HashMap<>(hour);
+    
+
+    public void setRoom(Map<Room, Literal> rooms) {
+        this.rooms = new HashMap<>(rooms);
     }
 
-    public void setHour(Map<String, Literal> hour) {
-        this.hour = new HashMap<>(hour);
+    public Map<Room, Literal> getRooms() {
+        return new HashMap<>(rooms);
     }
 
-    public Map<String, Literal> getDay() {
-        return new HashMap<>(day);
+    public void setRooms(Map<Room, Literal> rooms) {
+        this.rooms = new HashMap<>(rooms);
     }
 
-    public void setDay(Map<String, Literal> day) {
-        this.day = new HashMap<>(day);
+    public Map<Time, Literal> getTimes() {
+        return new HashMap<>(times);
     }
 
-    public void addRoom(Room room) {
-        possibleRooms.add(room);
+    public void setTimes(Map<Time, Literal> times) {
+        this.times = new HashMap<>(times);
     }
 
 

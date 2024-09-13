@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Room {
-    private int id;
+    private Integer id;
     private String name;
     private String type;
     private int capacity;
@@ -21,7 +21,7 @@ public class Room {
         this.travel = new HashMap<>();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     public String getName() {
@@ -35,6 +35,21 @@ public class Room {
     }
     public boolean isOpen() {
         return open;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
     public void setOpen(boolean open) {
         this.open = open;

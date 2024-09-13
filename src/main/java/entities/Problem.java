@@ -1,6 +1,9 @@
 package entities;
 
 import java.util.Map;
+
+import com.google.ortools.modelbuilder.LinearExpr;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,11 +20,17 @@ public class Problem {
     private Map<String, Course> courses = new HashMap<>();
     private Map<String, Time> times = new HashMap<>();
     private Map<String, Student> student = new HashMap<>();
-    private Map<Class, Student> classes = new HashMap<>();
+    private Map<String, Class> classes = new HashMap<>();
 
     private List<Distribution> distributions = new ArrayList<>();
 
-    Problem(String name, int nrDays, int nrWeeks) {
+    private ArrayList<LinearExpr> softDistributionExprs;
+
+    public Problem(){
+        
+    }
+
+    public Problem(String name, int nrDays, int nrWeeks) {
         this.name = name;
         this.nrDays = nrDays;
         this.nrWeeks = nrWeeks;
@@ -98,12 +107,12 @@ public class Problem {
         this.student = student;
     }
 
-    public Map<Class, Student> getClasses() {
-        return classes;
+    public Map<String, Class> getClasses() {
+        return new HashMap<>(classes);
     }
 
-    public void setClasses(Map<Class, Student> classes) {
-        this.classes = classes;
+    public void setClasses(Map<String, Class> classes) {
+        this.classes = new HashMap<>(classes);
     }
 
     public List<Distribution> getDistributions() {
@@ -112,5 +121,13 @@ public class Problem {
 
     public void setDistributions(List<Distribution> distributions) {
         this.distributions = distributions;
+    }
+
+    public ArrayList<LinearExpr> getSoftDistributionExpr() {
+        return softDistributionExprs;
+    }
+
+    public void setSoftDistributionExprs(ArrayList<LinearExpr> softDistributionExprs) {
+        this.softDistributionExprs = softDistributionExprs;
     }
 }
