@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Map;
 
-import com.google.ortools.modelbuilder.LinearExpr;
+import com.google.ortools.sat.LinearExpr;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +21,9 @@ public class Problem {
     private Map<String, Time> times = new HashMap<>();
     private Map<String, Student> student = new HashMap<>();
     private Map<String, Class> classes = new HashMap<>();
+    private ArrayList<Distribution> distributions = new ArrayList<>();
 
-    private List<Distribution> distributions = new ArrayList<>();
-
-    private ArrayList<LinearExpr> softDistributionExprs;
+    private ArrayList<LinearExpr> softDistributionExpr = new ArrayList<>();
 
     public Problem(){
         
@@ -119,15 +118,15 @@ public class Problem {
         return distributions;
     }
 
-    public void setDistributions(List<Distribution> distributions) {
+    public void setDistributions(ArrayList<Distribution> distributions) {
         this.distributions = distributions;
     }
 
     public ArrayList<LinearExpr> getSoftDistributionExpr() {
-        return softDistributionExprs;
+        return softDistributionExpr;
     }
 
     public void setSoftDistributionExprs(ArrayList<LinearExpr> softDistributionExprs) {
-        this.softDistributionExprs = softDistributionExprs;
+        this.softDistributionExpr = softDistributionExprs;
     }
 }

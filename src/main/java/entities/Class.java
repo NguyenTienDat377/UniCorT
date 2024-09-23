@@ -2,11 +2,14 @@ package entities;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
 import com.google.ortools.sat.Literal;
 
-public class Class {
+public class Class implements Comparable<Class> {
     private int id;
     private int limit;
 
@@ -17,6 +20,8 @@ public class Class {
 
     private Map<Room, Literal> rooms = new HashMap<>();
     private Map<Time, Literal> times = new HashMap<>();
+
+    private Set<Time> unavailable = new HashSet<>();
 
     Class(int id, int limit) {
         this.id = id;
@@ -84,5 +89,30 @@ public class Class {
         this.times = new HashMap<>(times);
     }
 
+    public HashSet<Time> getUnavailable() {
+        return new HashSet<>(unavailable);
+    }
+
+    public void setUnavailable(HashSet<Time> unavailable) {
+        this.unavailable = new HashSet<>(unavailable);
+    }
+
+    public void setRoomList(ArrayList<Penalty<Room>> roomList) {
+        this.roomList = new ArrayList<>(roomList);
+    }
+
+    public void setTimesList(ArrayList<Penalty<Time>> timesList) {
+        this.timesList = new ArrayList<>(timesList);
+    }
+
+    @Override
+    public int compareTo(Class other) {
+        if (other == null) {
+            throw new NullPointerException();
+        }
+
+    }
+    
 
 }
+
