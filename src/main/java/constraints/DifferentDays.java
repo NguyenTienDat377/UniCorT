@@ -32,23 +32,18 @@ public class DifferentDays {
             }
         }
         for (Time t : removeList) {
-            c1.getTimes().remove(t);
-            
+            c1.getTimes().remove(t); 
         }
-
     }
 
-    public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
+    public static void addConstraint(Class ci, Class cj, boolean isRequired, int pelnaty) {
         for (Time t1 : Factory.getProblem().getTimes().values()) {
             if (ci.getTimes().get(t1) == null) continue;
-
             for (Time t2 : Factory.getProblem().getTimes().values()) {
                 if (cj.getTimes().get(t2) == null ) continue;
-
                 if (!DifferentDays.compare(t1, t2)) {
                     Utils.addDistributionConstraint(ci.getTimes().get(t1), ci.getTimes().get(t1), isRequired, pelnaty);
                 }
-
             }
         }
     }

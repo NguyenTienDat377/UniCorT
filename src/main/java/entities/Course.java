@@ -4,11 +4,14 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Course {
+    private String id;
     private String name;
     private String teacherId;
     private Map<Integer, Configuration> configurations = new HashMap<>();
     private int limit;
     private int numberOfStudent;
+
+    public Course(){}
 
     Course(String name, String teacherId, int limit, int numberOfStudent) {
         this.name = name;
@@ -16,6 +19,11 @@ public class Course {
         this.limit = limit;
         this.numberOfStudent = numberOfStudent;
     }
+
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -50,6 +58,10 @@ public class Course {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setNumberOfStudent(int numberOfStudent) {

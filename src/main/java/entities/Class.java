@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
-import org.jetbrains.annotations.NotNull;
-
 import com.google.ortools.sat.Literal;
 
 public class Class implements Comparable<Class> {
@@ -20,13 +18,15 @@ public class Class implements Comparable<Class> {
 
     private Map<Room, Literal> rooms = new HashMap<>();
     private Map<Time, Literal> times = new HashMap<>();
+    private Map<Integer, Literal> hours = new HashMap<>();
+    private Map<String, Literal> days = new HashMap<>();
+    private Map<String, Literal> weeks = new HashMap<>();
 
     private Set<Time> unavailable = new HashSet<>();
 
     Class(int id, int limit) {
         this.id = id;
         this.limit = limit;
-        parentClass = null;
     }
 
     Class(Class classs) {
@@ -105,12 +105,33 @@ public class Class implements Comparable<Class> {
         this.timesList = new ArrayList<>(timesList);
     }
 
+    public Map<Integer, Literal> getHour() {
+        return new HashMap<>(hours);
+    }
+
+    public void setHour(Map<Integer, Literal> hours) {
+        this.hours = new HashMap<>(hours);
+    }
+
+    public Map<String, Literal> getDays() {
+        return new HashMap<>(days);
+    }
+
+    public void setDays(Map<String, Literal> days) {
+        this.days = new HashMap<>(days);
+    }
+
+    public Map<String, Literal> getWeeks() {
+        return new HashMap<>(weeks);
+    }
+
+    public void setWeeks(Map<String, Literal> weeks) {
+        this.weeks = new HashMap<>(weeks);
+    }
+
     @Override
     public int compareTo(Class other) {
-        if (other == null) {
-            throw new NullPointerException();
-        }
-
+        return this.id >= other.getId() ? 1 : 0;
     }
     
 

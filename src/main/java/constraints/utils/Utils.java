@@ -59,20 +59,61 @@ public class Utils {
         return week.toString();
     }
 
-    public static void addDistributionConstraint(Literal t1, Literal t2, boolean isRequired, int penalty) {
+    public static void addHardConstraint(Literal t1, Literal t2) {
+        Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+    }
+
+    public static void addSoftConstraint(Literal l1, Literal l2, boolean isRequired, int pelnaty) {
         if (isRequired) {
-            Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+            Literal[] l = new Literal[] {
+                l1.not(), l2.not()
+            };
+            Factory.getCpModel().addBoolOr(new Literal[]{l1.not(), l2.not()});
+            //LinearExpr expr = LinearExpr.weightedSum({}, null)
+            LinearExpr expr = LinearExpr.weightedSum(l, new long[]{(long) Factory.getProblem().getOptimization().getDistribution() * pelnaty});
+            Factory.getProblem().getSoftDistributionExpr().add(expr);
+        }
+    }
+
+    public static void addFourLiteralHardConstraint(Literal l1, Literal l2, Literal l3, Literal l4) {
+        Factory.getCpModel().addBoolOr(new Literal[]{l1.not(), l2.not(), l3.not(), l4.not()});
+    }
+
+    public static void addFourLiteralSoftConstraint(Literal l1, Literal l2, Literal l3, Literal l4, boolean isRequired, int pelnaty) {
+        if (isRequired) {
+            Literal[] l = new Literal[] {
+                l1.not(), l2.not(), l3.not(), l4.not()
+            };
+            Factory.getCpModel().addBoolOr(l);
+            LinearExpr expr = LinearExpr.weightedSum(l, new long[] {(long) Factory.getProblem().getOptimization().getDistribution() * pelnaty});
+            Factory.getProblem().getSoftDistributionExpr().add(expr);
+        }
+    }
+
+    public static void addDistributionConstraint(Literal t1, Literal t2, boolean isRequired, int penalty) {
+        Constraint pos = Factory.getCpModel().addBoolAnd(new Literal[]{t1, t2});
+        Constraint neg = Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+        Literal l = ConstraintHandler.addConstraint(pos, neg);
+        LinearExpr expr = LinearExpr.weightedSum(
+            new Literal[]{l},
+            new long[]{(long) Factory.getProblem().getOptimization().getDistribution() * penalty}
+        );
+        Factory.getProblem().getSoftDistributionExpr().add(expr);
+    }
+
+    public static void addFourDistributionConstraint(Literal c1, Literal c2, Literal t1, Literal t2, boolean isRequired, int pelnaty) {
+        if (isRequired) {
+            Factory.getCpModel().addBoolOr(new Literal[]{c1.not(), c2.not(), t1.not(), t2.not()});
         } else {
-            Constraint pos = Factory.getCpModel().addBoolAnd(new Literal[]{t1, t2});
-            Constraint neg = Factory.getCpModel().addBoolOr(new Literal[]{t1.not(), t2.not()});
+            Constraint pos = Factory.getCpModel().addBoolAnd(new Literal[]{c1, c2, t1, t2});
+            Constraint neg = Factory.getCpModel().addBoolOr(new Literal[]{c1, c2, t1, t2});
             Literal l = ConstraintHandler.addConstraint(pos, neg);
             LinearExpr expr = LinearExpr.weightedSum(
                 new Literal[]{l},
-                new long[]{(long) Factory.getProblem().getOptimization().getDistribution() * penalty}
+                new long[]{(long) Factory.getProblem().getOptimization().getDistribution() * pelnaty}
             );
             Factory.getProblem().getSoftDistributionExpr().add(expr);
         }
-
     }
 
 }

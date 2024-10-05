@@ -3,8 +3,6 @@ package constraints;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.ortools.sat.Literal;
-
 import constraints.utils.Utils;
 import entities.Time;
 import entities.Class;
