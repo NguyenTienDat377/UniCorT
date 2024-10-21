@@ -30,25 +30,32 @@ public class DifferentRoom {
                 removeList.add(r1);
             }
         }
-        
+
         for (Room r : removeList) {
             ci.getRooms().remove(r);
         }
 
     }
 
+    // FIXME:Delete this method
     public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
         if (ci.getRoomList().isEmpty() || cj.getRoomList().isEmpty()) {
             return;
         }
         for (Room r1 : Factory.getProblem().getRooms().values()) {
-            if (ci.getRooms().get(r1) == null) continue;
+            if (ci.getRooms().get(r1) == null)
+                continue;
 
             for (Room r2 : Factory.getProblem().getRooms().values()) {
-                if (cj.getRooms().get(r2) == null) continue;
+                if (cj.getRooms().get(r2) == null)
+                    continue;
 
                 if (!DifferentRoom.compare(r1, r2)) {
-                    Utils.addDistributionConstraint(ci.getRooms().get(r1), cj.getRooms().get(r2), isRequired, pelnaty);
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getRooms().get(r1), cj.getRooms().get(r2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getRooms().get(r1), cj.getRooms().get(r2), isRequired, pelnaty);
+                    }
                 }
             }
         }

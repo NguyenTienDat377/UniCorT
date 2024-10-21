@@ -35,12 +35,16 @@ public class WorkDay {
     }
 
     public static void resolve(Class ci, Class cj, int V, boolean isRequired, int pelnaty) {
-        for (Time ti : Factory.getProblem().getTimes().values()) {
-            if (ci.getTimes().get(ti) == null) continue;
-            for (Time tj : Factory.getProblem().getTimes().values()) {
-                if (cj.getTimes().get(tj) == null) continue;
-                if (!WorkDay.compare(ti, tj, V)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(ti), cj.getTimes().get(tj), isRequired, pelnaty);
+        for (Time t1 : Factory.getProblem().getTimes().values()) {
+            if (ci.getTimes().get(t1) == null) continue;
+            for (Time t2 : Factory.getProblem().getTimes().values()) {
+                if (cj.getTimes().get(t2) == null) continue;
+                if (!WorkDay.compare(t1, t2, V)) {
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                    }
                 }
             }
         }

@@ -1,12 +1,12 @@
 package entities;
 
-public class Unavalability {  
+public class Unavailability {
     private int start;
     private int end;
     private String days;
     private String weeks;
     
-    Unavalability(int start, int end, String days, String weeks) {
+    Unavailability(int start, int end, String days, String weeks) {
         this.start = start;
         this.end = end;
         this.days = days;

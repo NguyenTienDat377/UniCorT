@@ -1,31 +1,29 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Subpart {
-    private int id;
-    private List<Class> classes;
+    private String id;
+    private Map<String, Class> classes = new HashMap<>();
 
-    public Subpart(int id, int configurationId) {
-        this.id = id;
-        this.classes = new ArrayList<>();
+    public Subpart() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public List<Class> getClasses() {
+    public Map<String, Class> getClasses() {
         return classes;
     }
 
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setClasses(List<Class> classes) {
-        this.classes = classes;
+    public void setClasses(Map<String, Class> classes) {
+        this.classes = new HashMap<>(classes);
     }
 }

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class DifferentWeeks {
     public static boolean compare(Time ti, Time tj) {
-        String orWeek = Utils.orWeek(ti, tj);
-        for (int i = 0; i < orWeek.length(); i++) {
-            if (orWeek.charAt(i) == '1') return false;
+        String andWeek = Utils.andWeek(ti, tj);
+        for (int i = 0; i < andWeek.length(); i++) {
+            if (andWeek.charAt(i) == '1') return false;
         }
         return true;
     }
@@ -34,13 +34,17 @@ public class DifferentWeeks {
             ci.getTimes().remove(t);
         }
     }
-    public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
+    public static void resolve(Class ci, Class cj, boolean isRequired, int penalty) {
         for (Time t1 : Factory.getProblem().getTimes().values()) {
             if (ci.getTimes().get(t1) == null) continue;
             for (Time t2 : Factory.getProblem().getTimes().values()) {
                 if (cj.getTimes().get(t2) == null) continue;
                 if (!DifferentWeeks.compare(t2, t1)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, penalty);
+                    }
                 }
             }
         }

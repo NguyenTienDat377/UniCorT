@@ -32,13 +32,17 @@ public class Overlap {
             ci.getTimes().remove(t);
         }
     }
-    public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
+    public static void resolve(Class ci, Class cj, boolean isRequired, int penalty) {
         for (Time t1 : Factory.getProblem().getTimes().values()) {
             if (ci.getTimes().get(t1) == null) continue;
             for (Time t2 : Factory.getProblem().getTimes().values()) {
                 if (cj.getTimes().get(t2) == null) continue;
-                if (!NotOverlap.compare(t2, t1)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                if (!Overlap.compare(t2, t1)) {
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, penalty);
+                    }
                 }
             }
         }

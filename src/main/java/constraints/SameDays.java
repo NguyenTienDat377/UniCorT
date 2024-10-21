@@ -38,7 +38,11 @@ public class SameDays {
             for (Time t2 : cj.getTimes().keySet()) {
                 if (cj.getTimes().get(t2) == null) continue;
                 if (!SameDays.compare(t1, t2)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, penalty);
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, penalty);
+                    }
                 }
             }
         }

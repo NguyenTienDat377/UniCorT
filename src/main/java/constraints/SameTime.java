@@ -35,7 +35,11 @@ public class SameTime {
             for (Time t2 : Factory.getProblem().getTimes().values()) {
                 if (cj.getTimes().get(t2) == null) continue;
                 if (!SameTime.compare(t2, t1)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                    }
                 }
             }
         }

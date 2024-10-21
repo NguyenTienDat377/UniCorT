@@ -1,5 +1,6 @@
 package constraints;
 
+import constraints.utils.Utils;
 import entities.Room;
 import entities.Time;
 import solver.Factory;
@@ -48,6 +49,19 @@ public class RoomConflicts {
             if (ci.getTimes().get(ti) == null) continue;
             for (Time tj : Factory.getProblem().getTimes().values()) {
                 if (cj.getTimes().get(tj) == null) continue;
+                for (Room ri : Factory.getProblem().getRooms().values()) {
+                    if (ci.getRooms().get(ri) == null) continue;
+                    for (Room rj : Factory.getProblem().getRooms().values()) {
+                        if (cj.getRooms().get(rj) == null) continue;
+                        if (RoomConflicts.compare(ri, rj, ti, tj)) {
+                            if (isRequired) {
+                                Utils.addFourLiteralHardConstraint(ci.getTimes().get(ti), cj.getTimes().get(tj), ci.getRooms().get(ri), cj.getRooms().get(rj));
+                            } else {
+                                Utils.addFourLiteralSoftConstraint(ci.getTimes().get(ti), cj.getTimes().get(tj), ci.getRooms().get(ri), cj.getRooms().get(rj), isRequired, penalty);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

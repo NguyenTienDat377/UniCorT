@@ -33,7 +33,7 @@ public class DifferentTime {
             ci.getTimes().remove(t);
         }
     }
-    public static void resolve(Class ci, Class cj, boolean required, int penalty) {
+    public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
         for (Time t1 : Factory.getProblem().getTimes().values()) {
             if (ci.getTimes().get(t1) == null) return;
 
@@ -41,7 +41,11 @@ public class DifferentTime {
                 if (cj.getTimes().get(t2) == null) return;
 
                 if (!DifferentTime.compare(t2, t1)) {
-                    Utils.addDistributionConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), false, penalty);
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2));
+                    } else {
+                        Utils.addSoftConstraint(ci.getTimes().get(t1), cj.getTimes().get(t2), isRequired, pelnaty);
+                    }
                 }
                 
             }

@@ -1,6 +1,8 @@
 package constraints;
 
+import constraints.utils.Utils;
 import entities.Room;
+import solver.Factory;
 import entities.Class;
 
 import java.util.List;
@@ -35,8 +37,20 @@ public class SameRoom {
         }
     }
 
-    public static void resolve(Room r1, Room rj, boolean isRequired, int pelnaty) {
-        
+    public static void resolve(Class ci, Class cj, boolean isRequired, int pelnaty) {
+        for (Room ri : Factory.getProblem().getRooms().values()) {
+            if (ci.getRooms().get(ri) == null) continue;
+            for (Room rj : Factory.getProblem().getRooms().values()) {
+                if (cj.getRooms().get(rj) == null) continue;
+                if (SameRoom.compare(ri, rj)) {
+                    if (isRequired) {
+                        Utils.addHardConstraint(ci.getRooms().get(ri), cj.getRooms().get(rj));
+                    } else {
+                        Utils.addSoftConstraint(ci.getRooms().get(ri), cj.getRooms().get(rj), isRequired, pelnaty);
+                    }
+                }
+            }
+        }
     }
     
 }

@@ -7,7 +7,7 @@ public class Course {
     private String id;
     private String name;
     private String teacherId;
-    private Map<Integer, Configuration> configurations = new HashMap<>();
+    private Map<String, Configuration> configurations = new HashMap<>();
     private int limit;
     private int numberOfStudent;
 
@@ -32,7 +32,7 @@ public class Course {
         return teacherId;
     }
 
-    public Map<Integer, Configuration> getConfigurations() {
+    public Map<String, Configuration> getConfigurations() {
         return new HashMap<>(configurations);
     }
 
@@ -52,7 +52,7 @@ public class Course {
         this.teacherId = teacherId;
     }
 
-    public void setConfigurations(Map<Integer, Configuration> configurations) {
+    public void setConfigurations(Map<String, Configuration> configurations) {
         this.configurations = new HashMap<>(configurations);
     }
 

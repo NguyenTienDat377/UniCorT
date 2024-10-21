@@ -2,13 +2,11 @@ package entities;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.ArrayList;
 import com.google.ortools.sat.Literal;
 
 public class Class implements Comparable<Class> {
-    private int id;
+    private String id;
     private int limit;
 
     private Class parentClass;
@@ -22,20 +20,17 @@ public class Class implements Comparable<Class> {
     private Map<String, Literal> days = new HashMap<>();
     private Map<String, Literal> weeks = new HashMap<>();
 
-    private Set<Time> unavailable = new HashSet<>();
+    private Map<Time, Literal> unavailable = new HashMap<>();
 
-    Class(int id, int limit) {
-        this.id = id;
-        this.limit = limit;
+    public Class() {}
+
+    Class(Class aClass) {
+        this.id = aClass.getId();
+        this.limit = aClass.getLimit();
+        this.parentClass = aClass.getParentClass();
     }
 
-    Class(Class classs) {
-        this.id = classs.getId();
-        this.limit = classs.getLimit();
-        this.parentClass = classs.getParentClass();
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -55,7 +50,7 @@ public class Class implements Comparable<Class> {
         return new ArrayList<>(timesList);
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,8 +61,6 @@ public class Class implements Comparable<Class> {
     public void setParentClass(Class parentClass) {
         this.parentClass = new Class(parentClass);
     }
-    
-    
 
     public void setRoom(Map<Room, Literal> rooms) {
         this.rooms = new HashMap<>(rooms);
@@ -87,14 +80,6 @@ public class Class implements Comparable<Class> {
 
     public void setTimes(Map<Time, Literal> times) {
         this.times = new HashMap<>(times);
-    }
-
-    public HashSet<Time> getUnavailable() {
-        return new HashSet<>(unavailable);
-    }
-
-    public void setUnavailable(HashSet<Time> unavailable) {
-        this.unavailable = new HashSet<>(unavailable);
     }
 
     public void setRoomList(ArrayList<Penalty<Room>> roomList) {
@@ -129,11 +114,17 @@ public class Class implements Comparable<Class> {
         this.weeks = new HashMap<>(weeks);
     }
 
+    public Map<Time, Literal> getUnavailableTime() {
+        return new HashMap<>(unavailable);
+    }
+
+    public void setUnavailable(Map<Time, Literal> unavailable) {
+        this.unavailable = new HashMap<>(unavailable);
+    }
+
     @Override
     public int compareTo(Class other) {
-        return this.id >= other.getId() ? 1 : 0;
+        return this.id.compareTo(other.getId());
     }
-    
 
 }
-
